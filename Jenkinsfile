@@ -7,12 +7,7 @@ pipeline {
   }
   stages {
     stage('Prep') {
-      agent {
-        dockerfile {
-          filename 'Dockerfile'
-        }
-        
-      }
+      agent any
       steps {
         sh 'echo "Prep finished"'
       }
