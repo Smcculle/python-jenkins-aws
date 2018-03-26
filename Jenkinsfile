@@ -8,7 +8,7 @@ pipeline {
       agent {
         dockerfile {
           filename 'Dockerfile'
-          label 'pymaster'
+          additionalBuildArgs '--label pymaster'
         }
       }
       steps {
