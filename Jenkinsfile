@@ -7,6 +7,7 @@ pipeline {
             steps {
             sh 'uname -a'
             sh 'groups'
+            sh 'cat /etc/group'
             }
         }
         stage('Build') { 
