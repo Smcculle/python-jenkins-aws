@@ -6,7 +6,7 @@ pipeline {
             agent any
             steps {
             sh 'whoami'
-            docker run hello-world 
+            sh 'docker run hello-world'
             }
         }
         /*
