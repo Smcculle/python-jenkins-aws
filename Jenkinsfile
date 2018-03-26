@@ -14,6 +14,7 @@ pipeline {
         stage('Prep') {
             steps {
                 sh """
+                    pip install virtualenv
                     virtualenv venv
                     export PATH=${VIRTUAL_ENV}/bin:${PATH}
                     pip install --upgrade pip
