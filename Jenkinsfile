@@ -1,6 +1,5 @@
 pipeline {
     agent { 
-        label 'main'
         docker { 
             image 'python:2-alpine'
         }
@@ -13,9 +12,6 @@ pipeline {
     stages {
 
         stage('Prep') {
-            agent {
-                label 'main'
-            }
 
             steps {
                 sh """
