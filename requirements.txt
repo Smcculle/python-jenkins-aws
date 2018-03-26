@@ -1,0 +1,5 @@
+pylint
+pytest
+pytest-html
+pytest-pep8
+pyinstaller
