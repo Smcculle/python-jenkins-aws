@@ -1,7 +1,7 @@
 pipeline {
   agent none
   environment {
-    TEST_DIR = test-reports
+    TEST_DIR='test-reports'
   }
   stages {
     stage('Prep') {
