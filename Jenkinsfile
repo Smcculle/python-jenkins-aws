@@ -9,7 +9,7 @@ pipeline {
         stage('Prep') {
             steps {
                 sh 'pip install --upgrade pip'
-                sh 'pip install -r requirements'
+                sh 'pip install -r requirements.txt'
                // sh 'mkdir reports'
             }
         }
