@@ -3,6 +3,7 @@ pipeline {
     stages {
 
         stage('Testing') {
+            agent any
             steps {
             sh 'whoami' 
             }
