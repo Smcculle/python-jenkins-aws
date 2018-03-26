@@ -6,19 +6,19 @@ pipeline {
             agent any
             steps {
             sh 'whoami'
-            sh 'sudo docker run hello-world'
+            sh 'groups'
             }
         }
-        /*
         stage('Build') { 
             agent {
                 docker {
-                    image 'python:2-alpine' 
+                    image 'hello-world:latest' 
                 }
             }
             steps {
-                sh 'python -m py_compile sources/add2vals.py sources/calc.py' 
+//                sh 'python -m py_compile sources/add2vals.py sources/calc.py' 
+                echo 'hi from hello world'
             }
-        }*/
+        }
     }
 }
