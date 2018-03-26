@@ -2,6 +2,7 @@ pipeline {
     agent { 
         docker { 
             image 'python:2-alpine'
+            label 'main'
         }
     }
 
@@ -12,6 +13,10 @@ pipeline {
     stages {
 
         stage('Prep') {
+            agent {
+                label 'main'
+            }
+
             steps {
                 sh """
                     pip install virtualenv
