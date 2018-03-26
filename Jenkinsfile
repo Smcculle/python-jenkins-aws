@@ -15,6 +15,7 @@ pipeline {
 
             steps {
                 sh """
+                    pip list
                     pip install virtualenv
                     sleep 2
                     virtualenv venv
