@@ -1,24 +1,14 @@
 pipeline {
     agent none 
     stages {
-
-        stage('Testing') {
-            agent any
-            steps {
-            sh 'uname -a'
-            sh 'groups'
-            sh 'cat /etc/group'
-            }
-        }
         stage('Build') { 
             agent {
                 docker {
-                    image 'hello-world:latest' 
+                    image 'python:2-alpine' 
                 }
             }
             steps {
-//                sh 'python -m py_compile sources/add2vals.py sources/calc.py' 
-                echo 'hi from hello world'
+                sh 'python -m py_compile sources/add2vals.py sources/calc.py' 
             }
         }
     }
