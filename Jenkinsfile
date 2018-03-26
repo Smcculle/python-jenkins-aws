@@ -9,7 +9,7 @@ pipeline {
         stage('Verify') {
             steps {
                 sh 'pylint --reports=y sources/ > test-reports/pylint-report'
-                sh 'pytest --pep8 --html=test-reports/pep8-report.html --self-contained-html
+                sh 'pytest --pep8 --html=test-reports/pep8-report.html --self-contained-html'
             }
         }
 
