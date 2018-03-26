@@ -18,7 +18,7 @@ pipeline {
     stage('Verify') {
       parallel {
         stage('Lint') {
-          agent { docker { label 'pymaster' } }
+          agent { docker { 'pymaster' } }
           steps {
             sh "mkdir ${TEST_DIR}"
             sh 'pip list'
@@ -35,7 +35,7 @@ pipeline {
         }
 
         stage('Syntax') {
-          agent { docker { label 'pymaster' } }
+          agent { docker { 'pymaster' } }
           steps {
             sh 'pip list'
             sh 'python -m py_compile sources/*.py'
@@ -43,7 +43,7 @@ pipeline {
         }
 
         stage('Test') {
-          agent { docker { label 'pymaster' } }
+          agent { docker { 'pymaster' } }
           steps {
             sh "mkdir ${TEST_DIR}"
             sh 'pip list' 
