@@ -5,10 +5,11 @@ pipeline {
         stage('Testing') {
             agent any
             steps {
-            sh 'whoami' 
+            sh 'whoami'
+            docker run hello-world 
             }
         }
-
+        /*
         stage('Build') { 
             agent {
                 docker {
@@ -18,6 +19,6 @@ pipeline {
             steps {
                 sh 'python -m py_compile sources/add2vals.py sources/calc.py' 
             }
-        }
+        }*/
     }
 }
