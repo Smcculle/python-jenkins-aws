@@ -1,7 +1,17 @@
 pipeline {
-    agent none
+    agent { 
+        docker { 
+            image 'python:2-alpine'
+        }
+    }
     stages {
-        stage('Build') {
+        stage('Prep') {
+            sh """
+                pip install --upgrade pip
+                pip install -r requirements 
+            """
+        }
+        stage('Verify') {
             agent {
             docker {
                 image 'python:2-alpine'
