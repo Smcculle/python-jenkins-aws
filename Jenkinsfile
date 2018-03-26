@@ -3,7 +3,7 @@ pipeline {
       
     stages {
         stage('Prep') {
-            steps { sh 'pip list'}
+            steps { sh 'mkdir test-reports; ls'}
       }
 
         stage('Verify') {
