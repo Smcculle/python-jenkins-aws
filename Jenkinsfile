@@ -46,6 +46,9 @@ pipeline {
           agent { label 'master' }
           steps {
             sh 'mkdir $TEST_DIR'
+            sh 'echo "------------------------------------------------------------"' 
+            sh 'pip list' 
+            sh 'echo "------------------------------------------------------------"' 
             sh 'pytest --verbose --junit-xml $TEST_DIR/results.xml sources/test_calc.py || true '
           }
           post { 
