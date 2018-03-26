@@ -4,12 +4,23 @@ pipeline {
             image 'python:2-alpine'
         }
     }
+
+    environment {
+        VIRTUAL_ENV = "${env.WORKSPACE}/venv"
+    }
+
     stages {
 
         stage('Prep') {
             steps {
-                sh 'pip install --upgrade pip'
-                sh 'pip install --user jenkins -r requirements.txt'
+                sh """
+                    virtualenv venv
+                    export PATH=${VIRTUAL_ENV}/bin:${PATH}
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                """
+                //sh'pip install --upgrade pip'
+                //sh 'pip install --user jenkins -r requirements.txt'
                // sh 'mkdir reports'
             }
         }
