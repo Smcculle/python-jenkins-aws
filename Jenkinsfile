@@ -1,14 +1,10 @@
 pipeline {
-  agent {
-    dockerfile true
-  }
   stages {
     stage('Prep') {
       agent {
         dockerfile {
           filename 'Dockerfile'
         }
-        
       }
       steps {
         sh 'mkdir test-reports; ls'
@@ -27,7 +23,14 @@ pipeline {
             sh 'pylint --reports=y sources/ > test-reports/pylint-report 2> /dev/null || true'
             sh 'pytest --pep8 --html=test-reports/pep8-report.html --self-contained-html > /dev/null 2>&1 || true'
           }
+          post {
+            always {
+             archiveArtifacts 'test-reports/pylint-report'
+             archiveArtifacts 'test-reports/pep8-report.html'
+             }
+           }
         }
+
         stage('Syntax') {
           agent {
             dockerfile {
@@ -36,9 +39,10 @@ pipeline {
             
           }
           steps {
-            sh 'sh \'python -m py_compile sources/add2vals.py sources/calc.py\''
+            sh 'python -m py_compile sources/add2vals.py sources/calc.py'
           }
         }
+
         stage('Test') {
           agent {
             dockerfile {
@@ -48,6 +52,9 @@ pipeline {
           }
           steps {
             sh 'pytest --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+          }
+          post { 
+            always { junit 'test-reports/results.xml' }
           }
         }
       }
