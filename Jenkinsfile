@@ -1,61 +1,55 @@
 pipeline {
   agent none
+  environment {
+    TEST_DIR = test-reports
+  }
   stages {
     stage('Prep') {
       agent {
         dockerfile {
           filename 'Dockerfile'
+          args '--label master'
         }
       }
       steps {
-        sh 'mkdir test-reports; ls'
+        sh 'mkdir $TEST_DIR; ls'
       }
     }
     stage('Verify') {
       parallel {
         stage('Lint') {
-          agent {
-            dockerfile {
-              filename 'Dockerfile'
-            }
-            
-          }
+          agent { label 'master' }
           steps {
-            sh 'pylint --reports=y sources/ > test-reports/pylint-report 2> /dev/null || true'
-            sh 'pytest --pep8 --html=test-reports/pep8-report.html --self-contained-html > /dev/null 2>&1 || true'
+            sh '''
+            mkdir $TEST_DIR
+            pylint --reports=y sources/ > $TEST_DIR/pylint-report 2> /dev/null || true
+            pytest --pep8 --html=$TEST_DIR/pep8-report.html --self-contained-html > /dev/null 2>&1 || true
+            ls $TEST_DIR/
+            '''
           }
           post {
             always {
-             archiveArtifacts 'test-reports/pylint-report'
-             archiveArtifacts 'test-reports/pep8-report.html'
+             archiveArtifacts '$TEST_DIR/pylint-report'
+             archiveArtifacts '$TEST_DIR/pep8-report.html'
              }
            }
         }
 
         stage('Syntax') {
-          agent {
-            dockerfile {
-              filename 'Dockerfile'
-            }
-            
-          }
+          agent { label 'master' }
           steps {
             sh 'python -m py_compile sources/add2vals.py sources/calc.py'
           }
         }
 
         stage('Test') {
-          agent {
-            dockerfile {
-              filename 'Dockerfile'
-            }
-            
-          }
+          agent { label 'master' }
           steps {
-            sh 'pytest --verbose --junit-xml test-reports/results.xml sources/test_calc.py || true '
+            sh 'mkdir $TEST_DIR'
+            sh 'pytest --verbose --junit-xml $TEST_DIR/results.xml sources/test_calc.py || true '
           }
           post { 
-            always { junit 'test-reports/results.xml' }
+            always { junit '$TEST_DIR/results.xml' }
           }
         }
       }
