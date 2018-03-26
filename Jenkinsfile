@@ -1,8 +1,8 @@
 pipeline {
     agent { 
+        label 'main'
         docker { 
             image 'python:2-alpine'
-            label 'main'
         }
     }
 
