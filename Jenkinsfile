@@ -2,7 +2,7 @@ pipeline {
     agent none 
     stages {
 
-        stage 'Test' {
+        stage('Testing') {
         sh 'whoami' 
         }
 
