@@ -1,6 +1,7 @@
 # lightweight python instance
 FROM frolvlad/alpine-python2
 
+COPY requirements.txt .
 # set up environment
 #ENV APP_DIR /opt/python-jenkins-aws
 #ENV REP_DIR $APP_DIR/test-reports
