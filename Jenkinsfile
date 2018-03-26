@@ -5,7 +5,7 @@ pipeline {
         stage('Testing') {
             agent any
             steps {
-            sh 'whoami'
+            sh 'uname -a'
             sh 'groups'
             }
         }
