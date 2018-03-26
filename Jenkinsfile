@@ -8,19 +8,20 @@ pipeline {
       agent {
         dockerfile {
           filename 'Dockerfile'
-          args '--label master'
+          args '--label pymaster'
         }
       }
       steps {
-        sh "mkdir ${TEST_DIR}; ls"
+        sh 'pip list' 
       }
     }
     stage('Verify') {
       parallel {
         stage('Lint') {
-          agent { label 'master' }
+          agent { label 'pymaster' }
           steps {
             sh "mkdir ${TEST_DIR}"
+            sh 'pip list'
             sh "pylint --reports=y sources/ > ${TEST_DIR}/pylint-report 2> /dev/null || true"
             sh "pytest --pep8 --html=${TEST_DIR}/pep8-report.html --self-contained-html > /dev/null 2>&1 || true"
             sh "ls ${TEST_DIR}/"
@@ -34,19 +35,18 @@ pipeline {
         }
 
         stage('Syntax') {
-          agent { label 'master' }
+          agent { label 'pymaster' }
           steps {
+            sh 'pip list'
             sh 'python -m py_compile sources/*.py'
           }
         }
 
         stage('Test') {
-          agent { label 'master' }
+          agent { label 'pymaster' }
           steps {
             sh "mkdir ${TEST_DIR}"
-            sh 'echo "------------------------------------------------------------"' 
             sh 'pip list' 
-            sh 'echo "------------------------------------------------------------"' 
             sh "pytest --verbose --junit-xml ${TEST_DIR}/results.xml sources/test_calc.py || true "
           }
           post { 
