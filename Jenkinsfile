@@ -13,7 +13,9 @@ pipeline {
     stage('Verify') {
       parallel {
         stage('Lint') {
-      agent { dockerfile 'true' } 
+      agent { 
+        dockerfile { reuseNode true }
+      } 
           steps {
             sh 'ls -a'
             sh "mkdir ${TEST_DIR}"
