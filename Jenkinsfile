@@ -7,7 +7,7 @@ pipeline {
     stage('Prep') {
       agent { dockerfile 'true' }
       steps {
-        sh 'pip list' 
+        sh 'mkdir ${TEST_DIR}' 
       }
     }
     stage('Verify') {
@@ -15,8 +15,8 @@ pipeline {
         stage('Lint') {
       agent { dockerfile 'true' } 
           steps {
+            sh 'ls -a'
             sh "mkdir ${TEST_DIR}"
-            sh 'ls sources/'
             sh "pylint --reports=y sources/ > ${TEST_DIR}/pylint-report 2> /dev/null || true"
             sh "pytest --pep8 --html=${TEST_DIR}/pep8-report.html --self-contained-html > /dev/null 2>&1 || true"
             sh "ls ${TEST_DIR}/"
