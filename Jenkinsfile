@@ -13,7 +13,7 @@ pipeline {
     stage('Verify') {
       parallel {
         stage('Lint') {
-          agent any
+      agent { dockerfile 'true' } 
           steps {
             sh "mkdir ${TEST_DIR}"
             sh 'pip list'
@@ -30,6 +30,9 @@ pipeline {
         }
 
         stage('Syntax') {
+          agent { 
+            dockerfile { reuseNode true }
+          }
           steps {
             sh 'pip list'
             sh 'python -m py_compile sources/*.py'
@@ -37,6 +40,9 @@ pipeline {
         }
 
         stage('Test') {
+          agent { 
+            dockerfile { reuseNode true }
+          } 
           steps {
             sh "mkdir ${TEST_DIR}"
             sh 'pip list' 
