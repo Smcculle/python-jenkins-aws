@@ -23,8 +23,8 @@ The `jenkins` directory contains an example of the `Jenkinsfile` (i.e. Pipeline)
 you'll be creating yourself during the tutorial.
 
 ## Resources
-Some of the resources I found helpful in getting this project running - 
-- [https://docs.aws.amazon.com/AWSGettingStartedContinuousDeliveryPipeline/latest/GettingStarted/CICD_Jenkins_Pipeline.html](CI/CD Pipeline)
-- [https://d1.awsstatic.com/Projects/P5505030/aws-project_Jenkins-build-server.pdf](AWS Jenkins build server) 
-- [https://aws.amazon.com/blogs/devops/set-up-a-build-pipeline-with-jenkins-and-amazon-ecs/](Build pipeline with jenkins and ECS)
-- [https://www.ybrikman.com/writing/2015/11/11/running-docker-aws-ground-up/](Running docker-aws from the ground up) 
+Some of the resources I found helpful:  
+- [CI/CD Pipeline](https://docs.aws.amazon.com/AWSGettingStartedContinuousDeliveryPipeline/latest/GettingStarted/CICD_Jenkins_Pipeline.html)
+- [AWS Jenkins build server](https://d1.awsstatic.com/Projects/P5505030/aws-project_Jenkins-build-server.pdf)
+- [Build pipeline with jenkins and ECS](https://aws.amazon.com/blogs/devops/set-up-a-build-pipeline-with-jenkins-and-amazon-ecs/)
+- [Running docker-aws from the ground up](https://www.ybrikman.com/writing/2015/11/11/running-docker-aws-ground-up/)
