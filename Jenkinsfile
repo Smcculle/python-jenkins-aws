@@ -5,12 +5,7 @@ pipeline {
   }
   stages {
     stage('Prep') {
-      agent {
-        dockerfile {
-          filename 'Dockerfile'
-          additionalBuildArgs '--label pymaster'
-        }
-      }
+      agent { dockerfile 'true' }
       steps {
         sh 'pip list' 
       }
@@ -18,7 +13,7 @@ pipeline {
     stage('Verify') {
       parallel {
         stage('Lint') {
-          agent { docker { image 'pymaster' } }
+          agent any
           steps {
             sh "mkdir ${TEST_DIR}"
             sh 'pip list'
@@ -35,7 +30,6 @@ pipeline {
         }
 
         stage('Syntax') {
-          agent { docker { image 'pymaster' } }
           steps {
             sh 'pip list'
             sh 'python -m py_compile sources/*.py'
@@ -43,7 +37,6 @@ pipeline {
         }
 
         stage('Test') {
-          agent { docker { image 'pymaster' } }
           steps {
             sh "mkdir ${TEST_DIR}"
             sh 'pip list' 
