@@ -1,0 +1,33 @@
+#!/bin/bash -xe
+yum update -y aws-cfn-bootstrap
+/opt/aws/bin/cfn-init -v  --stack JenkinsStack --resource LaunchConfig  --configsets install_all  --region us-east-1
+yum remove -y java-1.7.0
+# Install Jenkins
+wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
+rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
+yum install -y jenkins
+# Add Jenkins user to Docker group
+usermod -a -G docker jenkins
+service jenkins start
+chkconfig jenkins on
+# Update the AWS CLI to the latest version
+yum update -y aws-cli
+# Wait 30 seconds to allow Jenkins to startup
+echo "Waiting 30 seconds for Jenkins to start....."
+sleep 30
+# Install the required plugins
+cd /var/lib/jenkins/plugins
+curl -O -L https://updates.jenkins-ci.org/latest/token-macro.hpi
+curl -O -L https://updates.jenkins-ci.org/latest/docker-build-publish.hpi
+curl -O -L https://updates.jenkins-ci.org/latest/multiple-scms.hpi
+curl -O -L https://updates.jenkins-ci.org/latest/github-api.hpi
+curl -O -L https://updates.jenkins-ci.org/latest/scm-api.hpi
+curl -O -L https://updates.jenkins-ci.org/latest/git-client.hpi
+curl -O -L https://updates.jenkins-ci.org/latest/github.hpi
+curl -O -L https://updates.jenkins-ci.org/latest/git.hpi
+curl -O -L https://updates.jenkins-ci.org/latest/dockerhub.hpi
+chown jenkins:jenkins *.hpi
+# Restarting Jenkins
+service jenkins restart
+/opt/aws/bin/cfn-signal -e $?  --stack JenkinsStack --resource WebServerGroup  --region us-east-1
+
