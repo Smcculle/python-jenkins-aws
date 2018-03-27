@@ -2,7 +2,8 @@
 
 Testing integration with Jenkins running on EC2.  Modified several tutorials to set up an ECS cluster for jenkins and docker in an autoscaling group.  Jenkins receives a webhook on pushing to master branch and it triggers a pipeline build.  
 
-Pipeline runs verification in parallel:  `py_compile` to check syntax, `pylint` and `pytest-pep8` for linting, and `pytest` to run unit tests.  After passing verification, the project is compiled to a binary using `pyinstaller` and the artifacts are saved in Jenkins.    
+Pipeline runs verification in parallel:  `py_compile` to check syntax, `pylint` and `pytest-pep8` for linting, and `pytest` to run unit tests.  After passing verification, the project is compiled to a binary using `pyinstaller` and the artifacts are saved in Jenkins with HTML reports where applicable.  
+
 ## Resources
 Some of the resources I found helpful:  
 - [CI/CD Pipeline](https://docs.aws.amazon.com/AWSGettingStartedContinuousDeliveryPipeline/latest/GettingStarted/CICD_Jenkins_Pipeline.html)
