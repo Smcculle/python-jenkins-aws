@@ -16,7 +16,7 @@ pipeline {
       agent { dockerfile 'true' } 
           steps {
             sh "mkdir ${TEST_DIR}"
-            sh 'pip list'
+            sh 'ls sources/'
             sh "pylint --reports=y sources/ > ${TEST_DIR}/pylint-report 2> /dev/null || true"
             sh "pytest --pep8 --html=${TEST_DIR}/pep8-report.html --self-contained-html > /dev/null 2>&1 || true"
             sh "ls ${TEST_DIR}/"
@@ -34,7 +34,6 @@ pipeline {
             dockerfile { reuseNode true }
           }
           steps {
-            sh 'pip list'
             sh 'python -m py_compile sources/*.py'
           }
         }
@@ -45,7 +44,6 @@ pipeline {
           } 
           steps {
             sh "mkdir ${TEST_DIR}"
-            sh 'pip list' 
             sh "pytest --verbose --junit-xml ${TEST_DIR}/results.xml sources/test_calc.py || true "
           }
           post { 
@@ -56,10 +54,7 @@ pipeline {
     }
     stage('Deliver') {
       agent {
-        docker {
-          image 'cdrx/pyinstaller-linux:python2'
-        }
-        
+        docker { image 'cdrx/pyinstaller-linux:python2' } 
       }
       steps {
         sh 'pyinstaller --onefile sources/add2vals.py'
