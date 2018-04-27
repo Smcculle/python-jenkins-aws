@@ -1,6 +1,6 @@
 # python-jenkins-aws
 
-[![Build Status](http://ec2-54-84-196-21.compute-1.amazonaws.com:8080/buildStatus/icon?job=python-jenkins-aws/master&build=73)](http://ec2-54-84-196-21.compute-1.amazonaws.com:8080/job/python-jenkins-aws/master/73/)
+[![Build Status](https://camo.githubusercontent.com/a2ad04e8e2c9056dbba62d7617df47064698ad31/68747470733a2f2f6170692e7472617669732d63692e6f72672f61727069746a696e64616c39372f706572736f6e616c2d7365727665722e7376673f6272616e63683d6d6173746572)
 
 Testing integration with Jenkins running on EC2.  Modified several tutorials to set up an ECS cluster for jenkins and docker in an autoscaling group.  Jenkins receives a webhook on pushing to master branch and it triggers a pipeline build.  
 
